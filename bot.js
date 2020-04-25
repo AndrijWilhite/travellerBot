@@ -48,11 +48,5 @@ function postMessage (msg, channelID) {
 }
 
 function evalUser (user) {
-  if (user === 'Beskgar') {
-    return 'Lord ' + user
-  } else if (user === 'johnyatesiv') {
-    return 'Poop Face John'
-  } else {
-    return user
-  }
+  return user
 }
