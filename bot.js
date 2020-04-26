@@ -7,6 +7,7 @@ var rollCmd = require('./rollCmd')
 var coinFlip = require('./rolls/coinFlip')
 var nameMap = require('./charName.json')
 var text = require('./text.js')
+var digiQuote = require('./digiQuote.js')
 
 logger.remove(logger.transports.Console)
 logger.add(new logger.transports.Console(), {
@@ -33,6 +34,10 @@ bot.on('message', function (user, userID, channelID, message, evt) {
       case 'coin':
         let coinMsg = evalUser(user) + ' Flipped: ' + coinFlip()
         postMessage(coinMsg, channelID)
+        break
+      case 'digi':
+        let digiMsg = evalUser(user) + ' Says: ' + digiQuote()
+        postMessage(digiMsg, channelID)
         break
       default:
         let rollMsg = evalUser(user) + ' Rolled: ' + roll(rollCmd(message))
