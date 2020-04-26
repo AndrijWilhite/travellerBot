@@ -6,6 +6,7 @@ var roll = require('./rolls/dynamicRoll')
 var rollCmd = require('./rollCmd')
 var coinFlip = require('./rolls/coinFlip')
 var nameMap = require('./charName.json')
+var text = require('./text.js')
 
 logger.remove(logger.transports.Console)
 logger.add(new logger.transports.Console(), {
@@ -27,8 +28,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
     var cmd = args[0].toLowerCase()
     switch (cmd) {
       case 'help':
-        let helpMsg = 'To format for a dice roll follow the below examples:\n!1d6 rolls a single six sided dice\n !2d20 rolls two 20 sided dice\n Notes:\n -you can set any amount of sides for the dice\n -the "d" can be lower case or capital\n-large rolls like !999d999 dont work\n-A "!d" will roll a single six sided dice\n-A "!5d will roll 5 D6s"\n- "!coin" flips a coin'
-        postMessage(helpMsg, channelID)
+        postMessage(text.helper, channelID)
         break
       case 'coin':
         let coinMsg = evalUser(user) + ' Flipped: ' + coinFlip()
