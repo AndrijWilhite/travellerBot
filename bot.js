@@ -1,9 +1,11 @@
 var Discord = require('discord.io')
 var logger = require('winston')
 var auth = require('./auth.json')
+
 var roll = require('./rolls/dynamicRoll')
 var rollCmd = require('./rollCmd')
 var coinFlip = require('./rolls/coinFlip')
+var nameMap = require('./charName.json')
 
 logger.remove(logger.transports.Console)
 logger.add(new logger.transports.Console(), {
@@ -48,5 +50,9 @@ function postMessage (msg, channelID) {
 }
 
 function evalUser (user) {
-  return user
+  if (nameMap[user]) {
+    return nameMap[user]
+  } else {
+    return user
+  }
 }
