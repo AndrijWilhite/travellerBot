@@ -40,7 +40,12 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         postMessage(digiMsg, channelID)
         break
       default:
-        let rollMsg = evalUser(user) + ' Rolled: ' + roll(rollCmd(message))
+        let rollData = roll(rollCmd(message))
+        if (rollData.status) {
+          var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data + ' Result: ' + rollData.status
+        } else {
+          var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data + (rollData.sta)
+        }
         postMessage(rollMsg, channelID)
         break
     }

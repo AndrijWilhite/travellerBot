@@ -8,6 +8,6 @@ module.exports = {
   -large rolls like !999d999 dont work
   -A "!d" will roll a single six sided dice
   -A "!5d will roll 5 D6s"
-  - "!coin" flips a coin
+  -"!coin" flips a coin
   -"!digi" spits out a random digimon quote`
 }
