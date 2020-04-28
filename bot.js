@@ -8,6 +8,7 @@ var coinFlip = require('./rolls/coinFlip')
 var nameMap = require('./charName.json')
 var text = require('./text.js')
 var digiQuote = require('./digiQuote.js')
+var evalMsg = require('./util.js')
 
 logger.remove(logger.transports.Console)
 logger.add(new logger.transports.Console(), {
@@ -24,10 +25,14 @@ bot.on('ready', function (evt) {
   logger.info(bot.username + ' - (' + bot.id + ')')
 })
 bot.on('message', function (user, userID, channelID, message, evt) {
-  if (message.substring(0, 1) === '!') {
+  let msgCheck = evalMsg(message)
+    // console.log('msgCheck: ' + msgCheck)
+    // if (message.substring(0, 1) === '!') {
+  if (msgCheck) {
     var args = message.substring(1).split(' ')
     var cmd = args[0].toLowerCase()
-    switch (cmd) {
+    // switch (cmd) {
+        switch (msgCheck){
       case 'help':
         postMessage(text.helper, channelID)
         break
@@ -40,11 +45,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         postMessage(digiMsg, channelID)
         break
       default:
-        let rollData = roll(rollCmd(message))
+        let rollData = roll(rollCmd(msgCheck))
         if (rollData.status) {
           var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data + ' Result: ' + rollData.status
         } else {
-          var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data + (rollData.sta)
+          var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data
         }
         postMessage(rollMsg, channelID)
         break
