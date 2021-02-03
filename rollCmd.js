@@ -1,5 +1,4 @@
 module.exports = function getDices (message) {
-  console.log('on ROlls CMD: ' + message)
   var text = message.substring(1).split(' ')
   var cmd = text[0]
   var difficulty = require('./minEffect')

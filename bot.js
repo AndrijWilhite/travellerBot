@@ -25,14 +25,11 @@ bot.on('ready', function (evt) {
   logger.info(bot.username + ' - (' + bot.id + ')')
 })
 bot.on('message', function (user, userID, channelID, message, evt) {
-  let msgCheck = evalMsg(message)
-    // console.log('msgCheck: ' + msgCheck)
-    // if (message.substring(0, 1) === '!') {
-  if (msgCheck) {
+//   let msgCheck = evalMsg(message)
+    if (message.substring(0, 1) === '!') {
     var args = message.substring(1).split(' ')
     var cmd = args[0].toLowerCase()
-    // switch (cmd) {
-        switch (msgCheck){
+    switch (cmd) {
       case 'help':
         postMessage(text.helper, channelID)
         break
@@ -44,8 +41,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
         let digiMsg = evalUser(user) + ' Says: ' + digiQuote()
         postMessage(digiMsg, channelID)
         break
+      case 'joke':
+        postMessage('YOU!', channelID)
+        break
       default:
-        let rollData = roll(rollCmd(msgCheck))
+        let rollData = roll(rollCmd(message))
         if (rollData.status) {
           var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data + ' Result: ' + rollData.status
         } else {
@@ -71,3 +71,9 @@ function evalUser (user) {
     return user
   }
 }
+
+process.on('uncaughtException', function (exception) {
+  console.log(exception); // to see your exception details in the console
+  // if you are on production, maybe you can send the exception details to your
+  // email as well ?
+})
