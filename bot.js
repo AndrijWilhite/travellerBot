@@ -44,12 +44,23 @@ bot.on('message', function (user, userID, channelID, message, evt) {
       case 'joke':
         postMessage('YOU!', channelID)
         break
+      case 'pidpi':
+        postMessage('no', channelID)
+        break
+      case 'test':
+        // let digiMsgT = evalUser(user) + ' Says:' + digiQuote()
+        let a = 'https://giphy.com/gifs/fox-nintendo-ZQMVKzoTLdNBu'
+        postMessage(a, channelID, false)
+        break
+      case 'link':
+        postMessage('https://docs.google.com/spreadsheets/d/1JCAkEn4t0fm5Kca6Rh7jzbU2rgEp4X1yP5PzoEXBQrs/edit#gid=0 \n https://thetrove.is/reader.html?file=https%3A%2F%2Fthetrove.is%2FBooks%2FTraveller%2F08%2520-%2520Traveller%2520%2528Mongoose%2529%2FTraveller%2520-%2520Supplement%2520%252304%2520-%2520Central%2520Supply%2520Catalog%2520%2528mgp3819%2529.pdf \n https://thetrove.is/reader.html?file=https%3A%2F%2Fthetrove.is%2FBooks%2FTraveller%2F10%2520-%2520Traveller%25202nd%2520edition%2520%2528Mongoose%2529%2FMgT%25202E%2520-%2520Core%2520Rulebook.pdf ',channelID)
+        break
       default:
         let rollData = roll(rollCmd(message))
         if (rollData.status) {
-          var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data + ' Result: ' + rollData.status
+          var rollMsg = evalUser(user) + ' Rolled: `' + rollData.data + '` = ' + rollData.sum + ' Result: ' + rollData.status
         } else {
-          var rollMsg = evalUser(user) + ' Rolled: ' + rollData.data
+          var rollMsg = evalUser(user) + ' Rolled: `' + rollData.data + '` = ' + rollData.sum
         }
         postMessage(rollMsg, channelID)
         break
@@ -57,10 +68,11 @@ bot.on('message', function (user, userID, channelID, message, evt) {
   }
 })
 
-function postMessage (msg, channelID) {
+function postMessage (msg, channelID, voice) {
   bot.sendMessage({
     to: channelID,
-    message: msg
+    message: msg,
+    tts: voice
   })
 }
 

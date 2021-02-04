@@ -1,30 +1,28 @@
-module.exports = function getDynamicRoll ({ dice, sides, difficulty }) {
+module.exports = function getDynamicRoll ({ dice, sides, mod, modType, difficulty }) {
+
+  const reducer = (accumulator, currentValue) => accumulator + currentValue
+
   let results = []
   for (let i = 0; i < dice; i++) {
     results.push(getRandomNumber(sides))
   }
 
-  if (difficulty !== undefined) {
-    let status = rollDifficulty(results, difficulty)
-    return { 'data': results, 'status': status }
-  } else {
-    return { 'data': results }
-  }
+  const sum = results.reduce(reducer, parseInt(modType === '-' ? -Math.abs(mod) : mod))
 
-  // return results
+  if (difficulty !== undefined) {
+    let status = rollDifficulty(sum, difficulty)
+    return { 'data': results, 'sum': sum, 'status': status }
+  } else {
+    return { 'data': results.length > 100 ? 'to much to display' : results, 'sum': sum }
+  }
 }
 
 function getRandomNumber (max) {
   return Math.floor(Math.random() * Math.floor(max)) + 1
 }
 
-function rollDifficulty (results, diff) {
-  let total = 0
-  results.forEach(roll => {
-    total += roll
-  })
-
-  if (total >= diff) {
+function rollDifficulty (sum, diff) {
+  if (sum >= diff) {
     return 'Pass'
   } else {
     return 'Fail'
